@@ -13,7 +13,7 @@ This tiny webpage takes a user’s text input and instantly generates search lin
 You type a query like:
 
 ```
-oral cancer
+research paper
 ```
 
 …and boom — you get clickable search links for:
