@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Research Meta Search</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      max-width: 700px;
+      margin: auto;
+    }
+    input, button {
+      padding: 12px;
+      width: 100%;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    .results a {
+      display: block;
+      margin-top: 10px;
+      color: blue;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Research Meta Search</h2>
+  <p>Enter keywords and generate search links across research platforms:</p>
+
+  <input type="text" id="query" placeholder="e.g. oral cancer, AI in medicine">
+  <button onclick="searchLinks()">Search</button>
+
+  <h3>Search Results:</h3>
+  <div id="results" class="results"></div>
+
+<script>
+function searchLinks() {
+  const rawQuery = document.getElementById("query").value.trim();
+  if (!rawQuery) {
+    document.getElementById("results").innerHTML = "<p>Enter a search term.</p>";
+    return;
+  }
+
+  const encodedQuery = encodeURIComponent(rawQuery);
+  const encodedPlus = encodeURIComponent(rawQuery.replace(/ /g, "+"));
+  
+  const doajQuery = encodeURIComponent(`{"query":{"query_string":{"query":"${rawQuery}","default_operator":"AND"}},"track_total_hits":true}`);
+
+  const sites = [
+    {
+      name: "Google Scholar",
+      url: `https://scholar.google.com/scholar?q=${encodedQuery}`
+    },
+    {
+      name: "DOAJ – Journals",
+      url: `https://doaj.org/search/journals?ref=homepage-box&source=${doajQuery}`
+    },
+    {
+      name: "DOAJ – Articles",
+      url: `https://doaj.org/search/articles?ref=homepage-box&source=${doajQuery}`
+    },
+    {
+      name: "OpenAlex – Works",
+      url: `https://explore.openalex.org/works?page=1&filter=title_and_abstract.search:${rawQuery.replace(/ /g, "+")}`
+    },
+    {
+      name: "PubMed",
+      url: `https://pubmed.ncbi.nlm.nih.gov/?term=${encodedQuery}`
+    },
+    {
+      name: "ERIC",
+      url: `https://eric.ed.gov/?q=${encodedPlus}`
+    },
+    {
+      name: "Semantic Scholar",
+      url: `https://www.semanticscholar.org/search?q=${encodedQuery}&sort=relevance`
+    },
+    {
+      name: "medRxiv",
+      // medRxiv double-encodes "+" as %252B
+      url: `https://www.medrxiv.org/search/${encodeURIComponent(encodedPlus)}`
+    },
+    {
+      name: "bioRxiv",
+      url: `https://www.biorxiv.org/search/${encodeURIComponent(encodedPlus)}`
+    }
+  ];
+
+  const resultsDiv = document.getElementById("results");
+  resultsDiv.innerHTML = "";
+
+  sites.forEach(site => {
+    const a = document.createElement("a");
+    a.href = site.url;
+    a.target = "_blank";
+    a.textContent = `${site.name}`;
+    resultsDiv.appendChild(a);
+  });
+}
+</script>
+
+</body>
+</html>
