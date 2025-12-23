@@ -3,24 +3,159 @@
 <head>
   <title>Research Meta Search</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 30px;
-      max-width: 700px;
-      margin: auto;
-    }
-    input, button {
-      padding: 12px;
-      width: 100%;
-      margin-top: 10px;
-      font-size: 16px;
-    }
-    .results a {
-      display: block;
-      margin-top: 10px;
-      color: blue;
-      font-size: 15px;
-    }
+    /* Base layout */
+body {
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: linear-gradient(135deg, #f4f7fb, #eef2f7);
+  padding: 40px 20px;
+  max-width: 760px;
+  margin: auto;
+  color: #1f2937;
+}
+
+/* Card container feel */
+body > * {
+  box-sizing: border-box;
+}
+
+/* Headings */
+h2 {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 28px;
+  color: #0f172a;
+}
+
+h3 {
+  margin-top: 30px;
+  font-size: 20px;
+  color: #111827;
+}
+
+/* Description text */
+p {
+  text-align: center;
+  color: #475569;
+  margin-bottom: 25px;
+  font-size: 15px;
+}
+
+/* Input field */
+input[type="text"] {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  outline: none;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+input[type="text"]:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* Button */
+button {
+  width: 100%;
+  margin-top: 14px;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(29, 78, 216, 0.25);
+  opacity: 0.95;
+}
+
+button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(29, 78, 216, 0.2);
+}
+
+/* Results container */
+.results {
+  margin-top: 20px;
+  padding: 18px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+/* Result links */
+.results a {
+  display: block;
+  padding: 12px 14px;
+  margin-top: 10px;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: #1d4ed8;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
+}
+
+.results a:hover {
+  background: #eef2ff;
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+}
+
+/* Empty message */
+.results p {
+  margin: 0;
+  color: #64748b;
+  text-align: left;
+  font-size: 14px;
+}
+
+/* Result links with favicon */
+.results a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  margin-top: 10px;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #0f172a;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
+}
+
+.results a:hover {
+  background: #eef2ff;
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+}
+
+/* Favicon image */
+.results img {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  border-radius: 4px;
+}
+
+/* Site name text */
+.results span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
   </style>
 </head>
 <body>
@@ -99,6 +234,61 @@ function searchLinks() {
   });
 }
 </script>
+
+<script>
+function getFavicon(url) {
+  const domain = new URL(url).hostname;
+  return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+}
+
+function searchLinks() {
+  const rawQuery = document.getElementById("query").value.trim();
+  if (!rawQuery) {
+    document.getElementById("results").innerHTML = "<p>Enter a search term.</p>";
+    return;
+  }
+
+  const encodedQuery = encodeURIComponent(rawQuery);
+  const encodedPlus = encodeURIComponent(rawQuery.replace(/ /g, "+"));
+  
+  const doajQuery = encodeURIComponent(
+    `{"query":{"query_string":{"query":"${rawQuery}","default_operator":"AND"}},"track_total_hits":true}`
+  );
+
+  const sites = [
+    { name: "Google Scholar", url: `https://scholar.google.com/scholar?q=${encodedQuery}` },
+    { name: "DOAJ Journals", url: `https://doaj.org/search/journals?source=${doajQuery}` },
+    { name: "DOAJ Articles", url: `https://doaj.org/search/articles?source=${doajQuery}` },
+    { name: "OpenAlex", url: `https://explore.openalex.org/works?filter=title_and_abstract.search:${rawQuery.replace(/ /g, "+")}` },
+    { name: "PubMed", url: `https://pubmed.ncbi.nlm.nih.gov/?term=${encodedQuery}` },
+    { name: "ERIC", url: `https://eric.ed.gov/?q=${encodedPlus}` },
+    { name: "Semantic Scholar", url: `https://www.semanticscholar.org/search?q=${encodedQuery}` },
+    { name: "medRxiv", url: `https://www.medrxiv.org/search/${encodeURIComponent(encodedPlus)}` },
+    { name: "bioRxiv", url: `https://www.biorxiv.org/search/${encodeURIComponent(encodedPlus)}` }
+  ];
+
+  const resultsDiv = document.getElementById("results");
+  resultsDiv.innerHTML = "";
+
+  sites.forEach(site => {
+    const a = document.createElement("a");
+    a.href = site.url;
+    a.target = "_blank";
+
+    const img = document.createElement("img");
+    img.src = getFavicon(site.url);
+    img.alt = "";
+
+    const span = document.createElement("span");
+    span.textContent = site.name;
+
+    a.appendChild(img);
+    a.appendChild(span);
+    resultsDiv.appendChild(a);
+  });
+}
+</script>
+
 
 </body>
 </html>
