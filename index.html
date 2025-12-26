@@ -3,17 +3,16 @@
 <head>
   <title>paperSearch</title>
   <style>
-    /* Base layout */
+/* Dark mode base */
 body {
   font-family: "Segoe UI", Roboto, Arial, sans-serif;
-  background: linear-gradient(135deg, #f4f7fb, #eef2f7);
+  background: linear-gradient(135deg, #0f172a, #020617);
   padding: 40px 20px;
   max-width: 760px;
   margin: auto;
-  color: #1f2937;
+  color: #e5e7eb;
 }
 
-/* Card container feel */
 body > * {
   box-sizing: border-box;
 }
@@ -21,39 +20,55 @@ body > * {
 /* Headings */
 h2 {
   text-align: center;
-  margin-bottom: 10px;
-  font-size: 28px;
-  color: #0f172a;
+  margin-bottom: 8px;
+  font-size: 30px;
+  color: #f9fafb;
 }
 
 h3 {
-  margin-top: 30px;
+  margin-top: 28px;
   font-size: 20px;
-  color: #111827;
+  color: #e5e7eb;
 }
 
-/* Description text */
+/* Intro description block */
+.intro {
+  text-align: center;
+  padding: 12px 14px;
+  margin-bottom: 20px;
+  background: rgba(30, 41, 59, 0.7);
+  border-radius: 14px;
+  border: 1px solid #1e293b;
+}
+
+/* Body text */
 p {
   text-align: center;
-  color: #475569;
+  color: #cbd5f5;
   margin-bottom: 25px;
   font-size: 15px;
 }
 
-/* Input field */
+/* Input */
 input[type="text"] {
   width: 100%;
   padding: 14px 16px;
   font-size: 16px;
   border-radius: 10px;
-  border: 1px solid #cbd5e1;
+  border: 1px solid #334155;
+  background: #020617;
+  color: #f9fafb;
   outline: none;
   transition: border-color 0.25s, box-shadow 0.25s;
 }
 
+input[type="text"]::placeholder {
+  color: #64748b;
+}
+
 input[type="text"]:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.25);
 }
 
 /* Button */
@@ -63,8 +78,8 @@ button {
   padding: 14px;
   font-size: 16px;
   font-weight: 600;
-  color: #ffffff;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+  background: linear-gradient(135deg, #0284c7, #0369a1);
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -73,53 +88,24 @@ button {
 
 button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(29, 78, 216, 0.25);
-  opacity: 0.95;
+  box-shadow: 0 8px 22px rgba(3, 105, 161, 0.35);
 }
 
 button:active {
   transform: translateY(0);
-  box-shadow: 0 4px 10px rgba(29, 78, 216, 0.2);
 }
 
-/* Results container */
+/* Results container card */
 .results {
   margin-top: 20px;
   padding: 18px;
-  background: #ffffff;
+  background: #020617;
   border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  border: 1px solid #1e293b;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
 }
 
-/* Result links */
-.results a {
-  display: block;
-  padding: 12px 14px;
-  margin-top: 10px;
-  border-radius: 8px;
-  background: #f8fafc;
-  color: #1d4ed8;
-  text-decoration: none;
-  font-size: 15px;
-  font-weight: 500;
-  transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
-}
-
-.results a:hover {
-  background: #eef2ff;
-  transform: translateX(4px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
-}
-
-/* Empty message */
-.results p {
-  margin: 0;
-  color: #64748b;
-  text-align: left;
-  font-size: 14px;
-}
-
-/* Result links with favicon */
+/* Result row with favicon */
 .results a {
   display: flex;
   align-items: center;
@@ -127,25 +113,25 @@ button:active {
   padding: 12px 14px;
   margin-top: 10px;
   border-radius: 10px;
-  background: #f8fafc;
-  color: #0f172a;
+  background: #020617;
+  color: #e5e7eb;
   text-decoration: none;
   font-size: 15px;
   font-weight: 500;
   transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
+  border: 1px solid #1e293b;
 }
 
 .results a:hover {
-  background: #eef2ff;
+  background: #020617;
   transform: translateX(4px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+  box-shadow: 0 4px 16px rgba(56, 189, 248, 0.25);
 }
 
-/* Favicon image */
+/* Favicon */
 .results img {
   width: 20px;
   height: 20px;
-  flex-shrink: 0;
   border-radius: 4px;
 }
 
@@ -156,84 +142,29 @@ button:active {
   text-overflow: ellipsis;
 }
 
+/* Empty state */
+.results p {
+  margin: 0;
+  color: #94a3b8;
+  text-align: left;
+}
   </style>
 </head>
+
 <body>
 
-  <h2>paperSearch</h2>
-  <p>Enter keywords and generate search links across research platforms:</p>
+<h2>🧪 paperSearch</h2>
 
-  <input type="text" id="query" placeholder="e.g. cancer, AI, (made with ♥️)">
-  <button onclick="searchLinks()">Search</button>
+<div class="intro">
+  <strong>paperSearch</strong> is a lightweight, browser-based academic meta-search interface.<br>
+  Enter keywords and generate search links across research platforms.
+</div>
 
-  <h3>Search Results:</h3>
-  <div id="results" class="results"></div>
+<input type="text" id="query" placeholder="e.g. cancer, AI, machine learning">
+<button onclick="searchLinks()">Search</button>
 
-<script>
-function searchLinks() {
-  const rawQuery = document.getElementById("query").value.trim();
-  if (!rawQuery) {
-    document.getElementById("results").innerHTML = "<p>Enter a search term.</p>";
-    return;
-  }
-
-  const encodedQuery = encodeURIComponent(rawQuery);
-  const encodedPlus = encodeURIComponent(rawQuery.replace(/ /g, "+"));
-  
-  const doajQuery = encodeURIComponent(`{"query":{"query_string":{"query":"${rawQuery}","default_operator":"AND"}},"track_total_hits":true}`);
-
-  const sites = [
-    {
-      name: "Google Scholar",
-      url: `https://scholar.google.com/scholar?q=${encodedQuery}`
-    },
-    {
-      name: "DOAJ – Journals",
-      url: `https://doaj.org/search/journals?ref=homepage-box&source=${doajQuery}`
-    },
-    {
-      name: "DOAJ – Articles",
-      url: `https://doaj.org/search/articles?ref=homepage-box&source=${doajQuery}`
-    },
-    {
-      name: "OpenAlex – Works",
-      url: `https://explore.openalex.org/works?page=1&filter=title_and_abstract.search:${rawQuery.replace(/ /g, "+")}`
-    },
-    {
-      name: "PubMed",
-      url: `https://pubmed.ncbi.nlm.nih.gov/?term=${encodedQuery}`
-    },
-    {
-      name: "ERIC",
-      url: `https://eric.ed.gov/?q=${encodedPlus}`
-    },
-    {
-      name: "Semantic Scholar",
-      url: `https://www.semanticscholar.org/search?q=${encodedQuery}&sort=relevance`
-    },
-    {
-      name: "medRxiv",
-      // medRxiv double-encodes "+" as %252B
-      url: `https://www.medrxiv.org/search/${encodeURIComponent(encodedPlus)}`
-    },
-    {
-      name: "bioRxiv",
-      url: `https://www.biorxiv.org/search/${encodeURIComponent(encodedPlus)}`
-    }
-  ];
-
-  const resultsDiv = document.getElementById("results");
-  resultsDiv.innerHTML = "";
-
-  sites.forEach(site => {
-    const a = document.createElement("a");
-    a.href = site.url;
-    a.target = "_blank";
-    a.textContent = `${site.name}`;
-    resultsDiv.appendChild(a);
-  });
-}
-</script>
+<h3>Search Results:</h3>
+<div id="results" class="results"></div>
 
 <script>
 function getFavicon(url) {
@@ -257,9 +188,9 @@ function searchLinks() {
 
   const sites = [
     { name: "Google Scholar", url: `https://scholar.google.com/scholar?q=${encodedQuery}` },
-    { name: "DOAJ Journals", url: `https://doaj.org/search/journals?source=${doajQuery}` },
-    { name: "DOAJ Articles", url: `https://doaj.org/search/articles?source=${doajQuery}` },
-    { name: "OpenAlex", url: `https://explore.openalex.org/works?filter=title_and_abstract.search:${rawQuery.replace(/ /g, "+")}` },
+    { name: "DOAJ – Journals", url: `https://doaj.org/search/journals?source=${doajQuery}` },
+    { name: "DOAJ – Articles", url: `https://doaj.org/search/articles?source=${doajQuery}` },
+    { name: "OpenAlex – Works", url: `https://explore.openalex.org/works?filter=title_and_abstract.search:${rawQuery.replace(/ /g, "+")}` },
     { name: "PubMed", url: `https://pubmed.ncbi.nlm.nih.gov/?term=${encodedQuery}` },
     { name: "ERIC", url: `https://eric.ed.gov/?q=${encodedPlus}` },
     { name: "Semantic Scholar", url: `https://www.semanticscholar.org/search?q=${encodedQuery}` },
@@ -277,7 +208,6 @@ function searchLinks() {
 
     const img = document.createElement("img");
     img.src = getFavicon(site.url);
-    img.alt = "";
 
     const span = document.createElement("span");
     span.textContent = site.name;
@@ -288,7 +218,6 @@ function searchLinks() {
   });
 }
 </script>
-
 
 </body>
 </html>

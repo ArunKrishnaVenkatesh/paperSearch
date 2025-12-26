@@ -1,146 +1,75 @@
-# 🧪 Research Meta-Search (Vibe-Coded Edition)
 
-Welcome to the most **vibe-coded academic search tool** you’ll ever find.
-No backend. No frameworks. No build tools.
-Just straight **HTML + JavaScript + enthusiasm.**
+# 🧪 paperSearch
 
-This tiny webpage takes a user’s text input and instantly generates search links across multiple research databases — especially for **tech, engineering, and medical science.**
+**paperSearch** is a lightweight, browser-based academic meta-search tool.
+Enter a query once and instantly open searches across multiple research databases—no backend, installs, or APIs required.
 
 ---
 
-## ✨ What it Does
-
-You type a query like:
-
-```
-research paper
-```
-
-…and boom — you get clickable search links for:
+## 🔍 Supported Platforms
 
 * Google Scholar
-* DOAJ Journals
-* DOAJ Articles
-* OpenAlex Works
+* DOAJ (Journals & Articles)
+* OpenAlex (Works)
 * PubMed
-* ERIC (Education)
+* ERIC
 * Semantic Scholar
 * medRxiv
 * bioRxiv
 
-All using the **exact search URL formats the sites expect.**
+---
+
+## 🚀 Motivation
+
+paperSearch simplifies the process of searching multiple databases by avoiding:
+
+* servers or API keys
+* dashboards and complex setup
+* repeating the same search on different sites
+* **juggling multiple tabs manually**
+
+It generates direct search links from a single input.
 
 ---
 
-## 🚀 Why This Exists
+## 🛠️ How to Use
 
-Because sometimes you don’t want:
+1. Download `index.html`
+2. Open it in your browser
+3. Enter your search term
+4. Click any generated link
 
-* a server
-* OAuth keys
-* complicated dashboards
-* or a PhD in “wrangling academic APIs”
-
-You want something quick that *just vibes* and gets you to the papers.
-
-This website is that.
+No installation or dependencies required.
 
 ---
 
-## 🛠️ How to Run It
+## 🧩 How It Works
 
-1. Download `index.html`.
-2. Double-click it.
-3. Browser opens.
-4. Type things.
-5. Click links.
-6. Research begins.
+* reads your query in the browser
+* URL-encodes it
+* inserts it into platform-specific search URLs
+* displays clickable links
 
-No setup. No libraries. **Raw vibes.**
+All processing happens locally.
 
 ---
 
-## 🧩 How It Works (In Plain English)
+## ⚠️ Limitations
 
-* JavaScript grabs whatever text you typed.
-* It URL-encodes the query.
-* It dynamically injects it into each platform’s required search format.
-* It prints links.
+paperSearch does **not**:
 
-That’s it.
-That’s the code.
-
----
-
-## 🧼 Code Philosophy
-
-* **0 dependencies**
-* **0 build steps**
-* **0 overthinking**
-* 100% “What if we just… tried it.”
-
-This is *proof-of-concept energy* — not enterprise architecture.
-
----
-
-## 📦 Files
-
-```
-index.html   # all the magic
-```
-
-(There is no second file. Stop looking.)
-
----
-
-## 🧪 Supported Search Formats
-
-All URLs match live examples from the platforms — including:
-
-* DOAJ JSON search payloads
-* OpenAlex `title_and_abstract.search:`
-* PubMed `term=`
-* Semantic Scholar `sort=relevance`
-* medRxiv / bioRxiv double-encoding quirks (`%252B`)
-
-We didn’t fight their formats.
-We just accepted their chaos.
-
----
-
-## 🛑 What This Project Doesn’t Do
-
-* fetch results
-* scrape anything
-* bypass authentication
+* fetch results directly
+* scrape sites
 * store data
-* claim perfection
+* bypass paywalls
 
-It just **throws you into research land with style.**
-
----
-
-## 🔮 Future Improvements (Maybe…)
-
-* checkboxes to pick platforms
-* Tailwind UI glow-up
-* Node/Python backend
-* export link lists
-* dark mode for the aesthetic
-
-Or maybe it stays beautifully janky forever.
-We’ll see.
+It only generates links.
 
 ---
 
-## 🥂 Credit
+## 🥂 Credits
 
-Built by a human who said:
+This project was created with substantial assistance from **ChatGPT**
+for concept support, drafting, and refinement.
 
-> “lol what if we coded this in one sitting”
-
-and then proceeded to do exactly that.
-
-Enjoy the hacks.
-Find some research.
-**Vibe responsibly.**
+---
