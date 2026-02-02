@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>paperSearch</title>
+  <title>paperSearch - Test (14 Databases)</title>
   <style>
 /* Dark mode base */
 body {
@@ -148,16 +148,32 @@ button:active {
   color: #94a3b8;
   text-align: left;
 }
+
+/* Group headers */
+.group-header {
+  margin-top: 24px;
+  padding: 8px 14px;
+  background: rgba(56, 189, 248, 0.1);
+  border-radius: 8px;
+  border-left: 4px solid #38bdf8;
+  font-weight: 600;
+  color: #38bdf8;
+  font-size: 14px;
+}
+
+.results .group-header:first-child {
+  margin-top: 0;
+}
   </style>
 </head>
 
 <body>
 
-<h2>🧪 paperSearch</h2>
+<h2>🧪 paperSearch (14 Databases)</h2>
 
 <div class="intro">
   <strong>paperSearch</strong> is a lightweight, browser-based academic meta-search interface.<br>
-  Enter keywords and generate search links across research platforms.
+  Enter keywords and generate search links across 14 research platforms.
 </div>
 
 <input type="text" id="query" placeholder="e.g. cancer, AI, machine learning">
@@ -187,23 +203,46 @@ function searchLinks() {
   );
 
   const sites = [
+    { name: "📚 General & Scholarly", type: "header" },
     { name: "Google Scholar", url: `https://scholar.google.com/scholar?q=${encodedQuery}` },
-    { name: "DOAJ – Journals", url: `https://doaj.org/search/journals?source=${doajQuery}` },
-    { name: "DOAJ – Articles", url: `https://doaj.org/search/articles?source=${doajQuery}` },
-    { name: "OpenAlex – Works", url: `https://explore.openalex.org/works?filter=title_and_abstract.search:${rawQuery.replace(/ /g, "+")}` },
-    { name: "PubMed", url: `https://pubmed.ncbi.nlm.nih.gov/?term=${encodedQuery}` },
-    { name: "ERIC", url: `https://eric.ed.gov/?q=${encodedPlus}` },
     { name: "Semantic Scholar", url: `https://www.semanticscholar.org/search?q=${encodedQuery}` },
+    { name: "OpenAlex – Works", url: `https://explore.openalex.org/works?filter=title_and_abstract.search:${rawQuery.replace(/ /g, "+")}` },
+    
+    { name: "🔬 Life Sciences & Medicine", type: "header" },
+    { name: "PubMed", url: `https://pubmed.ncbi.nlm.nih.gov/?term=${encodedQuery}` },
+    { name: "Europe PMC", url: `https://europepmc.org/search?query=${encodedQuery}` },
     { name: "medRxiv", url: `https://www.medrxiv.org/search/${encodeURIComponent(encodedPlus)}` },
     { name: "bioRxiv", url: `https://www.biorxiv.org/search/${encodeURIComponent(encodedPlus)}` },
-    { name: "Lens.org", url: `https://www.lens.org/lens/search/scholar/list?q=${encodedQuery}` },
-    { name: "BASE", url: `https://www.base-search.net/Search/Results?lookfor=${encodedQuery}&name=&oaboost=1&newsearch=1&refid=dcbasen` }
+    { name: "arXiv q-bio", url: `https://arxiv.org/search/q-bio?query=${encodedQuery}&searchtype=all&abstracts=show&order=-announced_date_first&size=50` },
+    
+    { name: "📖 Open Access & Repositories", type: "header" },
+    { name: "DOAJ – Journals", url: `https://doaj.org/search/journals?source=${doajQuery}` },
+    { name: "DOAJ – Articles", url: `https://doaj.org/search/articles?source=${doajQuery}` },
+    { name: "CORE", url: `https://core.ac.uk/search?q=${encodedQuery}` },
+    { name: "BASE", url: `https://www.base-search.net/Search/Results?lookfor=${encodedQuery}&name=&oaboost=1&newsearch=1&refid=dcbasen` },
+    
+    { name: "💻 Technology & Sciences", type: "header" },
+    { name: "arXiv", url: `https://arxiv.org/search/?query=${encodedQuery}&searchtype=all` },
+    
+    { name: "🎓 Education", type: "header" },
+    { name: "ERIC", url: `https://eric.ed.gov/?q=${encodedPlus}` },
+    
+    { name: "🔍 Multidisciplinary Search", type: "header" },
+    { name: "Lens.org", url: `https://www.lens.org/lens/search/scholar/list?q=${encodedQuery}` }
   ];
 
   const resultsDiv = document.getElementById("results");
   resultsDiv.innerHTML = "";
 
   sites.forEach(site => {
+    if (site.type === "header") {
+      const headerDiv = document.createElement("div");
+      headerDiv.className = "group-header";
+      headerDiv.textContent = site.name;
+      resultsDiv.appendChild(headerDiv);
+      return;
+    }
+
     const a = document.createElement("a");
     a.href = site.url;
     a.target = "_blank";
