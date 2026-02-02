@@ -195,7 +195,9 @@ function searchLinks() {
     { name: "ERIC", url: `https://eric.ed.gov/?q=${encodedPlus}` },
     { name: "Semantic Scholar", url: `https://www.semanticscholar.org/search?q=${encodedQuery}` },
     { name: "medRxiv", url: `https://www.medrxiv.org/search/${encodeURIComponent(encodedPlus)}` },
-    { name: "bioRxiv", url: `https://www.biorxiv.org/search/${encodeURIComponent(encodedPlus)}` }
+    { name: "bioRxiv", url: `https://www.biorxiv.org/search/${encodeURIComponent(encodedPlus)}` },
+    { name: "Lens.org", url: `https://www.lens.org/lens/search/scholar/list?q=${encodedQuery}` },
+    { name: "BASE", url: `https://www.base-search.net/Search/Results?lookfor=${encodedQuery}&name=&oaboost=1&newsearch=1&refid=dcbasen` }
   ];
 
   const resultsDiv = document.getElementById("results");
