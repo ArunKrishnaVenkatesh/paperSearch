@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>paperSearch - Test (14 Databases)</title>
+  <title>paperSearch</title>
   <style>
 /* Dark mode base */
 body {
@@ -164,16 +164,39 @@ button:active {
 .results .group-header:first-child {
   margin-top: 0;
 }
+
+/* Notification popup */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 1000;
+}
+
+.notification.show {
+  opacity: 1;
+  transform: translateY(0);
+}
   </style>
 </head>
 
 <body>
 
-<h2>🧪 paperSearch (14 Databases)</h2>
+<h2>🧪 paperSearch </h2>
 
 <div class="intro">
-  <strong>paperSearch</strong> is a lightweight, browser-based academic meta-search interface.<br>
-  Enter keywords and generate search links across 14 research platforms.
+<strong>paperSearch</strong> is a lightweight, browser-based academic meta-search interface.<br>
+  Enter keywords and generate search links across various research platforms.
 </div>
 
 <input type="text" id="query" placeholder="e.g. cancer, AI, machine learning">
@@ -182,10 +205,20 @@ button:active {
 <h3>Search Results:</h3>
 <div id="results" class="results"></div>
 
+<div id="notification" class="notification">Updated</div>
+
 <script>
 function getFavicon(url) {
   const domain = new URL(url).hostname;
   return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+}
+
+function showNotification() {
+  const notification = document.getElementById("notification");
+  notification.classList.add("show");
+  setTimeout(() => {
+    notification.classList.remove("show");
+  }, 2000);
 }
 
 function searchLinks() {
@@ -194,6 +227,8 @@ function searchLinks() {
     document.getElementById("results").innerHTML = "<p>Enter a search term.</p>";
     return;
   }
+  
+  showNotification();
 
   const encodedQuery = encodeURIComponent(rawQuery);
   const encodedPlus = encodeURIComponent(rawQuery.replace(/ /g, "+"));
@@ -203,10 +238,11 @@ function searchLinks() {
   );
 
   const sites = [
-    { name: "📚 General & Scholarly", type: "header" },
+{ name: "📚 General & Scholarly", type: "header" },
     { name: "Google Scholar", url: `https://scholar.google.com/scholar?q=${encodedQuery}` },
     { name: "Semantic Scholar", url: `https://www.semanticscholar.org/search?q=${encodedQuery}` },
     { name: "OpenAlex – Works", url: `https://explore.openalex.org/works?filter=title_and_abstract.search:${rawQuery.replace(/ /g, "+")}` },
+    { name: "ResearchGate", url: `https://www.researchgate.net/search/publication?q=${encodedQuery}` },
     
     { name: "🔬 Life Sciences & Medicine", type: "header" },
     { name: "PubMed", url: `https://pubmed.ncbi.nlm.nih.gov/?term=${encodedQuery}` },
@@ -215,19 +251,21 @@ function searchLinks() {
     { name: "bioRxiv", url: `https://www.biorxiv.org/search/${encodeURIComponent(encodedPlus)}` },
     { name: "arXiv q-bio", url: `https://arxiv.org/search/q-bio?query=${encodedQuery}&searchtype=all&abstracts=show&order=-announced_date_first&size=50` },
     
-    { name: "📖 Open Access & Repositories", type: "header" },
+{ name: "📖 Open Access & Repositories", type: "header" },
     { name: "DOAJ – Journals", url: `https://doaj.org/search/journals?source=${doajQuery}` },
     { name: "DOAJ – Articles", url: `https://doaj.org/search/articles?source=${doajQuery}` },
+    { name: "JSTOR", url: `https://www.jstor.org/action/doBasicSearch?Query=${encodedQuery}&so=rel` },
     { name: "CORE", url: `https://core.ac.uk/search?q=${encodedQuery}` },
     { name: "BASE", url: `https://www.base-search.net/Search/Results?lookfor=${encodedQuery}&name=&oaboost=1&newsearch=1&refid=dcbasen` },
     
-    { name: "💻 Technology & Sciences", type: "header" },
+{ name: "💻 Technology & Sciences", type: "header" },
+    { name: "IEEE Xplore", url: `https://ieeexplore.ieee.org/search/searchresult.jsp?newsearch=true&queryText=${encodedQuery}` },
     { name: "arXiv", url: `https://arxiv.org/search/?query=${encodedQuery}&searchtype=all` },
     
     { name: "🎓 Education", type: "header" },
     { name: "ERIC", url: `https://eric.ed.gov/?q=${encodedPlus}` },
     
-    { name: "🔍 Multidisciplinary Search", type: "header" },
+{ name: "🔍 Multidisciplinary Search", type: "header" },
     { name: "Lens.org", url: `https://www.lens.org/lens/search/scholar/list?q=${encodedQuery}` }
   ];
 
