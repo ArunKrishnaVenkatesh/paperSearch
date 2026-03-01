@@ -7,10 +7,11 @@
 body {
   font-family: "Segoe UI", Roboto, Arial, sans-serif;
   background: linear-gradient(135deg, #0f172a, #020617);
-  padding: 40px 20px;
-  max-width: 760px;
+  padding: 60px 20px;
+  max-width: 900px;
   margin: auto;
-  color: #e5e7eb;
+  color: #f1f5f9;
+  line-height: 1.6;
 }
 
 body > * {
@@ -20,46 +21,52 @@ body > * {
 /* Headings */
 h2 {
   text-align: center;
-  margin-bottom: 8px;
-  font-size: 30px;
+  margin-bottom: 20px;
+  font-size: 36px;
+  font-weight: 700;
   color: #f9fafb;
 }
 
 h3 {
-  margin-top: 28px;
-  font-size: 20px;
+  margin-top: 40px;
+  font-size: 24px;
+  font-weight: 600;
   color: #e5e7eb;
 }
 
 /* Intro description block */
 .intro {
   text-align: center;
-  padding: 12px 14px;
-  margin-bottom: 20px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
   background: rgba(30, 41, 59, 0.7);
-  border-radius: 14px;
+  border-radius: 16px;
   border: 1px solid #1e293b;
+  font-size: 16px;
+  line-height: 1.7;
 }
 
 /* Body text */
 p {
   text-align: center;
   color: #cbd5f5;
-  margin-bottom: 25px;
-  font-size: 15px;
+  margin-bottom: 32px;
+  font-size: 16px;
+  line-height: 1.7;
 }
 
 /* Input */
 input[type="text"] {
   width: 100%;
-  padding: 14px 16px;
-  font-size: 16px;
-  border-radius: 10px;
+  padding: 18px 20px;
+  font-size: 17px;
+  border-radius: 12px;
   border: 1px solid #334155;
   background: #020617;
   color: #f9fafb;
   outline: none;
   transition: border-color 0.25s, box-shadow 0.25s;
+  margin-bottom: 20px;
 }
 
 input[type="text"]::placeholder {
@@ -75,15 +82,16 @@ input[type="text"]:focus {
 button {
   width: 100%;
   margin-top: 14px;
-  padding: 14px;
-  font-size: 16px;
+  padding: 18px;
+  font-size: 17px;
   font-weight: 600;
   color: white;
   background: linear-gradient(135deg, #0284c7, #0369a1);
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   cursor: pointer;
   transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+  margin-bottom: 40px;
 }
 
 button:hover {
@@ -97,26 +105,37 @@ button:active {
 
 /* Results container card */
 .results {
-  margin-top: 20px;
-  padding: 18px;
+  margin-top: 32px;
+  padding: 24px;
   background: #020617;
-  border-radius: 14px;
+  border-radius: 16px;
   border: 1px solid #1e293b;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+/* Two-column layout for results */
+.results-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.results-column {
+  min-width: 0;
 }
 
 /* Result row with favicon */
 .results a {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  margin-top: 10px;
-  border-radius: 10px;
+  gap: 14px;
+  padding: 16px 18px;
+  margin-top: 14px;
+  border-radius: 12px;
   background: #020617;
   color: #e5e7eb;
   text-decoration: none;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 500;
   transition: background 0.2s, transform 0.15s, box-shadow 0.15s;
   border: 1px solid #1e293b;
@@ -151,14 +170,14 @@ button:active {
 
 /* Group headers */
 .group-header {
-  margin-top: 24px;
-  padding: 8px 14px;
+  margin-top: 32px;
+  padding: 12px 18px;
   background: rgba(56, 189, 248, 0.1);
-  border-radius: 8px;
+  border-radius: 10px;
   border-left: 4px solid #38bdf8;
   font-weight: 600;
   color: #38bdf8;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .results .group-header:first-child {
@@ -168,15 +187,15 @@ button:active {
 /* Notification popup */
 .notification {
   position: fixed;
-  top: 20px;
-  right: 20px;
-  padding: 12px 20px;
+  top: 30px;
+  right: 30px;
+  padding: 16px 24px;
   background: linear-gradient(135deg, #10b981, #059669);
   color: white;
-  border-radius: 8px;
+  border-radius: 12px;
   font-weight: 600;
-  font-size: 14px;
-  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+  font-size: 15px;
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
   opacity: 0;
   transform: translateY(-10px);
   transition: opacity 0.3s, transform 0.3s;
@@ -186,6 +205,27 @@ button:active {
 .notification.show {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  body {
+    padding: 40px 16px;
+    max-width: 100%;
+  }
+  
+  .results-columns {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  h2 {
+    font-size: 28px;
+  }
+  
+  h3 {
+    font-size: 20px;
+  }
 }
   </style>
 </head>
@@ -269,15 +309,42 @@ function searchLinks() {
     { name: "Lens.org", url: `https://www.lens.org/lens/search/scholar/list?q=${encodedQuery}` }
   ];
 
-  const resultsDiv = document.getElementById("results");
+const resultsDiv = document.getElementById("results");
   resultsDiv.innerHTML = "";
+
+  // Create two-column layout
+  const columnsDiv = document.createElement("div");
+  columnsDiv.className = "results-columns";
+  
+  const leftColumn = document.createElement("div");
+  leftColumn.className = "results-column";
+  
+  const rightColumn = document.createElement("div");
+  rightColumn.className = "results-column";
+  
+  columnsDiv.appendChild(leftColumn);
+  columnsDiv.appendChild(rightColumn);
+  resultsDiv.appendChild(columnsDiv);
+
+  // Divide categories equally between columns (alternating)
+  const categories = sites.filter(site => site.type === "header");
+  const leftCategories = categories.slice(0, Math.ceil(categories.length / 2)).map(c => c.name);
+  
+  let currentColumn = leftColumn;
 
   sites.forEach(site => {
     if (site.type === "header") {
+      // Switch column based on category position
+      if (leftCategories.includes(site.name)) {
+        currentColumn = leftColumn;
+      } else {
+        currentColumn = rightColumn;
+      }
+      
       const headerDiv = document.createElement("div");
       headerDiv.className = "group-header";
       headerDiv.textContent = site.name;
-      resultsDiv.appendChild(headerDiv);
+      currentColumn.appendChild(headerDiv);
       return;
     }
 
@@ -293,7 +360,7 @@ function searchLinks() {
 
     a.appendChild(img);
     a.appendChild(span);
-    resultsDiv.appendChild(a);
+    currentColumn.appendChild(a);
   });
 }
 </script>
